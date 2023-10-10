@@ -5,8 +5,11 @@
 #include "QMessageBox"
 #include <QStackedWidget>
 #include <QVBoxLayout>
-#include "qcustomplot.h"
-#include <QTimer>
+#include "RPi_BNO055.h"
+#include "RPi_BNO055.h"
+#include "pigpio.h"
+#include "MyThreadWorker.h"
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,15 +19,25 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+
+private:
+
+     int krotnosc1;
+     int krotnosc2;
+     float imux;
+     float imuy;
+     float imuz;
+     int imu_init;
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void setting_plot();
 
+public slots:
+    void updateData(float x, float y, float z, int correct);
 
 
 private slots:
-
 
     void on_opcja1_clicked();
 
@@ -49,8 +62,6 @@ private slots:
 
     void on_slider2_valueChanged(int value);
 
-     void realtimeDataSlot();
-
 
      void on_setbtn_2_clicked();
 
@@ -58,9 +69,14 @@ private slots:
 
      void on_opcja6_clicked();
 
- private:
-     int krotnosc1;
-     int krotnosc2;
+
+     void on_option3_2_clicked();
+
+
+     //Adafruit_BNO055 * imuobiekt;
+     void on_pushButton_2_clicked();
+
+private:
     Ui::MainWindow *ui;
 
 };
